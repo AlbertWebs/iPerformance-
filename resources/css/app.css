@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Smooth scroll for anchor links and go-to-top */
+html {
+    scroll-behavior: smooth;
+}
+
+@theme {
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-primary: #261b7b;
+    --color-primary-hover: #302090;
+    /* Lighter primary for use on dark backgrounds (hero, testimonials) */
+    --color-primary-light: #9b8ed4;
+}
+
+/* Home hero gradient – dark background with primary purple accent */
+.home-hero-gradient {
+    background: linear-gradient(135deg, #080612 0%, #0d0a1c 30%, #120d28 55%, #161033 80%, #1a1340 100%);
+}
+
+/* Subtle grid pattern overlay (dark hero) */
+.home-hero-pattern {
+    background-image: radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* Primary light (for dark backgrounds) */
+.text-primary-light { color: var(--color-primary-light); }
+.text-primary-light\/90 { color: color-mix(in oklch, var(--color-primary-light) 90%, transparent); }
+
+/* Hero CTA shadow uses primary color */
+.hero-cta-btn { box-shadow: 0 10px 15px -3px rgb(38 27 123 / 0.25), 0 4px 6px -4px rgb(38 27 123 / 0.1); }
+.hero-cta-btn:hover { box-shadow: 0 10px 15px -3px rgb(38 27 123 / 0.35), 0 4px 6px -4px rgb(38 27 123 / 0.15); }
+
+/* Hide scrollbar but keep scroll */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
