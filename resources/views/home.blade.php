@@ -120,9 +120,11 @@
                             <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             {{ $workshop->location }}
                         </p>
-                        @if($workshop->registration_link)
-                            <a href="{{ $workshop->registration_link }}" target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover transition">Register <span aria-hidden="true">→</span></a>
-                        @endif
+                        @php
+                            $regHref = ($workshop->registration_link && \Illuminate\Support\Str::startsWith($workshop->registration_link, 'http')) ? $workshop->registration_link : route('register');
+                            $regExt = \Illuminate\Support\Str::startsWith($regHref, 'http') && (parse_url($regHref, PHP_URL_HOST) !== request()->getHost());
+                        @endphp
+                        <a href="{{ $regHref }}" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover transition" @if($regExt) target="_blank" rel="noopener" @endif>Register <span aria-hidden="true">→</span></a>
                     </div>
                 </article>
             @endforeach

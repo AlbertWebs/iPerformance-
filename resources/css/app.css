@@ -46,3 +46,25 @@ html {
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }
+
+/* Legal pages (terms, privacy) – admin-edited HTML */
+.legal-content h2 { @apply mt-8 text-xl font-bold text-slate-900; }
+.legal-content h2:first-child { @apply mt-0; }
+.legal-content h3 { @apply mt-6 text-lg font-semibold text-slate-800; }
+.legal-content p { @apply mt-3 leading-relaxed; }
+.legal-content ul { @apply mt-3 list-disc list-inside space-y-1; }
+.legal-content li { @apply leading-relaxed; }
+
+/* Sticky header: when scrolled, full width and flat bar */
+#main-header.is-stuck {
+    @apply bg-white shadow-md border-slate-200;
+}
+#main-header.is-stuck #header-inner {
+    @apply max-w-none w-full mx-0;
+}
+#main-header.is-stuck #header-card {
+    @apply rounded-none border-0 border-t-0 shadow-none;
+}
+#main-header.is-stuck .header-mobile-menu {
+    @apply max-w-none w-full;
+}

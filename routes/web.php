@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CertificationController as AdminCertificationCont
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HeroController;
+use App\Http\Controllers\Admin\LegalPageController as AdminLegalPageController;
 use App\Http\Controllers\Admin\PageMetaController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LegalPageController;
 use App\Http\Controllers\MpesaCallbackController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\Portal\BookingController as PortalBookingController;
@@ -45,6 +47,8 @@ Route::post('/verify', [VerifyController::class, 'verify'])->name('verify.check'
 Route::get('/verify/result', [VerifyController::class, 'result'])->name('verify.result');
 Route::get('/services', [HomeController::class, 'services'])->name('services.index');
 Route::get('/services/{service:slug}', [HomeController::class, 'serviceShow'])->name('services.show');
+Route::get('/terms', [LegalPageController::class, 'terms'])->name('terms');
+Route::get('/privacy', [LegalPageController::class, 'privacy'])->name('privacy');
 
 // Student/Public auth (throttle: 5 attempts per minute)
 Route::middleware('guest')->group(function () {
@@ -96,6 +100,8 @@ Route::resource('certificates', AdminCertificateController::class)->except(['sho
     Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::get('hero', [HeroController::class, 'edit'])->name('hero.edit');
     Route::put('hero', [HeroController::class, 'update'])->name('hero.update');
+    Route::get('legal', [AdminLegalPageController::class, 'edit'])->name('legal.edit');
+    Route::put('legal', [AdminLegalPageController::class, 'update'])->name('legal.update');
     Route::get('page-meta', [PageMetaController::class, 'index'])->name('page-meta.index');
     Route::put('page-meta', [PageMetaController::class, 'update'])->name('page-meta.update');
     Route::get('users', [AdminUserController::class, 'index'])->name('users.index');

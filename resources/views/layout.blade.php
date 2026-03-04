@@ -19,9 +19,42 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
 </head>
 <body class="font-sans antialiased text-slate-800 bg-white min-h-screen flex flex-col">
-    <header class="sticky top-0 z-50 bg-slate-100/80 border-b border-slate-200 py-3 lg:py-4">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="rounded-lg border border-slate-200 bg-white shadow-sm px-4 sm:px-6 lg:px-8">
+    @php
+        $topContact = config('site.contact', []);
+        $hasTopContact = !empty($topContact['email']) || !empty($topContact['phone']) || !empty($topContact['address']);
+    @endphp
+    @if($hasTopContact)
+        <div class="border-b border-slate-200/80 bg-slate-800 text-slate-300">
+            <div class="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-xs sm:justify-between sm:text-sm">
+                    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 sm:justify-start">
+                        @if(!empty($topContact['phone']))
+                            <a href="tel:{{ preg_replace('/\s+/', '', $topContact['phone']) }}" class="inline-flex items-center gap-1.5 transition hover:text-primary">
+                                <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                <span>{{ $topContact['phone'] }}</span>
+                            </a>
+                        @endif
+                        @if(!empty($topContact['email']))
+                            <a href="mailto:{{ $topContact['email'] }}" class="inline-flex items-center gap-1.5 transition hover:text-primary">
+                                <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                <span class="break-all">{{ $topContact['email'] }}</span>
+                            </a>
+                        @endif
+                        @if(!empty($topContact['address']))
+                            <span class="inline-flex items-center gap-1.5 text-slate-400">
+                                <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <span>{{ $topContact['address'] }}@if(!empty($topContact['address_line2']))<span class="hidden sm:inline">, {{ $topContact['address_line2'] }}</span>@endif</span>
+                            </span>
+                        @endif
+                    </div>
+                    <a href="{{ route('contact') }}" class="hidden items-center gap-1.5 font-medium text-white transition hover:text-slate-200 sm:inline-flex">Get in touch →</a>
+                </div>
+            </div>
+        </div>
+    @endif
+    <header id="main-header" class="sticky top-0 z-50 border-b border-transparent bg-slate-100/80 py-3 transition-all duration-300 lg:py-4">
+        <div id="header-inner" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-300">
+            <div id="header-card" class="rounded-xl border border-slate-200 bg-white shadow-sm px-4 sm:px-6 lg:px-8 transition-all duration-300">
                 <div class="flex h-14 lg:h-16 items-center justify-between">
                     <a href="{{ route('home') }}" class="text-xl font-bold text-slate-900">iPerformance <span class="text-primary">Africa</span></a>
                     <nav class="hidden md:flex items-center gap-2 lg:gap-3">
@@ -52,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <div class="hidden md:hidden mx-auto max-w-7xl px-4 mt-2 rounded-lg border border-slate-200 bg-white shadow-sm" id="mobile-menu">
+        <div class="hidden md:hidden mx-auto max-w-7xl px-4 mt-2 rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-300 header-mobile-menu" id="mobile-menu">
             @php
                 $mobileLinkClass = 'rounded-lg border border-slate-200/80 px-4 py-2.5 transition hover:border-primary/30 hover:bg-slate-50 hover:text-primary ';
                 $mobileActive = 'border-primary/50 bg-primary/10 text-primary font-semibold';
@@ -178,7 +211,11 @@
             </div>
             <div class="mt-14 border-t border-slate-700/80 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row sm:gap-0">
                 <p class="text-xs tracking-wide text-slate-500">&copy; {{ date('Y') }} iPerformance Africa. All rights reserved.</p>
-                <a href="{{ route('contact') }}" class="text-xs text-slate-500 transition hover:text-primary">Privacy & contact</a>
+                <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-500">
+                    <a href="{{ route('terms') }}" class="transition hover:text-primary">Terms and Conditions</a>
+                    <a href="{{ route('privacy') }}" class="transition hover:text-primary">Privacy Policy</a>
+                    <a href="{{ route('contact') }}" class="transition hover:text-primary">Contact</a>
+                </div>
             </div>
         </div>
     </footer>

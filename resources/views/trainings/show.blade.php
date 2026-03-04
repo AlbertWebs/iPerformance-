@@ -54,11 +54,11 @@
                     </button>
                 @endif
             @endauth
-            @if($training->registration_link)
-                <a href="{{ $training->registration_link }}" target="_blank" rel="noopener" class="inline-flex rounded-xl border border-slate-300 px-6 py-3 font-medium text-slate-700 transition hover:bg-slate-50">Register for this training</a>
-            @else
-                <a href="{{ route('contact') }}" class="inline-flex rounded-xl border border-slate-300 px-6 py-3 font-medium text-slate-700 transition hover:bg-slate-50">Contact us to register</a>
-            @endif
+            @php
+                $trainingRegHref = ($training->registration_link && \Illuminate\Support\Str::startsWith($training->registration_link, 'http')) ? $training->registration_link : route('register');
+                $trainingRegExt = \Illuminate\Support\Str::startsWith($trainingRegHref, 'http') && (parse_url($trainingRegHref, PHP_URL_HOST) !== request()->getHost());
+            @endphp
+            <a href="{{ $trainingRegHref }}" class="inline-flex rounded-xl border border-slate-300 px-6 py-3 font-medium text-slate-700 transition hover:bg-slate-50" @if($trainingRegExt) target="_blank" rel="noopener" @endif>Register for this training</a>
             @guest
                 @if($training->price && $training->price > 0)
                     <a href="{{ route('login') }}?redirect={{ urlencode(request()->url()) }}" class="inline-flex text-sm text-primary hover:text-primary-hover">Log in to pay online</a>

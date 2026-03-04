@@ -20,9 +20,7 @@
                     <h2 class="mt-2 text-lg font-semibold text-slate-900">{{ $workshop->title }}</h2>
                     <p class="mt-2 text-sm text-slate-600">{{ Str::limit(strip_tags($workshop->description), 150) }}</p>
                     <p class="mt-2 text-xs text-slate-500">{{ $workshop->location }}</p>
-                    @if($workshop->registration_link)
-                        <a href="{{ $workshop->registration_link }}" target="_blank" rel="noopener" class="mt-4 inline-flex rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover">Register</a>
-                    @endif
+                    <a href="{{ route('register') }}" class="mt-4 inline-flex rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover">Register</a>
                 </div>
             </article>
         @empty

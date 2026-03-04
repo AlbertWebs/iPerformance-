@@ -157,9 +157,11 @@
                                 @if(isset($workshop->price) && $workshop->price > 0)
                                     <button type="button" class="book-btn min-h-[44px] flex-1 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-hover sm:min-h-0 sm:flex-none sm:py-2" data-type="workshop" data-id="{{ $workshop->id }}" data-title="{{ $workshop->title }}" data-amount="{{ $workshop->price }}">Pay with M-Pesa</button>
                                 @endif
-                                @if($workshop->registration_link)
-                                    <a href="{{ $workshop->registration_link }}" target="_blank" rel="noopener" class="min-h-[44px] inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:min-h-0 sm:flex-none sm:py-2">Register</a>
-                                @endif
+                                @php
+                                    $wRegHref = ($workshop->registration_link && \Illuminate\Support\Str::startsWith($workshop->registration_link, 'http')) ? $workshop->registration_link : route('register');
+                                    $wRegExt = \Illuminate\Support\Str::startsWith($wRegHref, 'http') && (parse_url($wRegHref, PHP_URL_HOST) !== request()->getHost());
+                                @endphp
+                                <a href="{{ $wRegHref }}" class="min-h-[44px] inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:min-h-0 sm:flex-none sm:py-2" @if($wRegExt) target="_blank" rel="noopener" @endif>Register</a>
                             </div>
                         </li>
                     @endforeach
@@ -198,9 +200,11 @@
                                 @if(isset($training->price) && $training->price > 0)
                                     <button type="button" class="book-btn min-h-[44px] flex-1 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary-hover sm:min-h-0 sm:flex-none sm:py-2" data-type="training" data-id="{{ $training->id }}" data-title="{{ $training->title }}" data-amount="{{ $training->price }}">Pay with M-Pesa</button>
                                 @endif
-                                @if($training->registration_link)
-                                    <a href="{{ $training->registration_link }}" target="_blank" rel="noopener" class="min-h-[44px] inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:min-h-0 sm:flex-none sm:py-2">Register</a>
-                                @endif
+                                @php
+                                    $tRegHref = ($training->registration_link && \Illuminate\Support\Str::startsWith($training->registration_link, 'http')) ? $training->registration_link : route('register');
+                                    $tRegExt = \Illuminate\Support\Str::startsWith($tRegHref, 'http') && (parse_url($tRegHref, PHP_URL_HOST) !== request()->getHost());
+                                @endphp
+                                <a href="{{ $tRegHref }}" class="min-h-[44px] inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:min-h-0 sm:flex-none sm:py-2" @if($tRegExt) target="_blank" rel="noopener" @endif>Register</a>
                                 <a href="{{ route('trainings.show', $training) }}" class="min-h-[44px] inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:min-h-0 sm:flex-none sm:py-2">View</a>
                             </div>
                         </li>

@@ -71,7 +71,7 @@
         <div>
             <label class="flex items-start gap-3">
                 <input type="checkbox" name="accept_terms" id="accept_terms" value="1" {{ old('accept_terms') ? 'checked' : '' }} required class="mt-1 rounded border-slate-300 text-primary focus:ring-primary">
-                <span class="text-sm text-slate-700">I accept the Terms &amp; Conditions and Privacy Policy of iPerformance Africa.</span>
+                <span class="text-sm text-slate-700">I accept the <a href="{{ route('terms') }}" target="_blank" rel="noopener" class="font-medium text-primary hover:underline">Terms &amp; Conditions</a> and <a href="{{ route('privacy') }}" target="_blank" rel="noopener" class="font-medium text-primary hover:underline">Privacy Policy</a> of iPerformance Africa.</span>
             </label>
         </div>
 
