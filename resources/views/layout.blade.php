@@ -62,20 +62,20 @@
                             $navLinkClass = 'rounded-lg border px-3 py-2 text-sm font-medium transition ';
                             $navLinkInactive = 'border-slate-200/80 text-slate-800 hover:border-primary/30 hover:bg-slate-50 hover:text-primary';
                             $navLinkActive = 'border-primary/50 bg-primary/10 text-primary font-semibold';
+                            $eLearningHref = auth()->check() ? route('portal.dashboard') : route('login');
+                            $eLearningActive = request()->routeIs('login') || request()->routeIs('portal.*');
                         @endphp
+                        <a href="{{ route('trainings.index') }}" class="{{ $navLinkClass }} {{ request()->routeIs('trainings.*') ? $navLinkActive : $navLinkInactive }}">Trainings</a>
+                        <a href="{{ $eLearningHref }}" class="{{ $navLinkClass }} {{ $eLearningActive ? $navLinkActive : $navLinkInactive }}">eLearning</a>
+                        <a href="{{ route('certifications.index') }}" class="{{ $navLinkClass }} {{ request()->routeIs('certifications.*') ? $navLinkActive : $navLinkInactive }}">Certifications</a>
                         <a href="{{ route('home') }}" class="{{ $navLinkClass }} {{ request()->routeIs('home') ? $navLinkActive : $navLinkInactive }}">Home</a>
                         <a href="{{ route('workshops.index') }}" class="{{ $navLinkClass }} {{ request()->routeIs('workshops.*') ? $navLinkActive : $navLinkInactive }}">Workshops</a>
-                        <a href="{{ route('trainings.index') }}" class="{{ $navLinkClass }} {{ request()->routeIs('trainings.*') ? $navLinkActive : $navLinkInactive }}">Training</a>
-                        <a href="{{ route('certifications.index') }}" class="{{ $navLinkClass }} {{ request()->routeIs('certifications.*') ? $navLinkActive : $navLinkInactive }}">Certifications</a>
                         <a href="{{ route('verify') }}" class="{{ $navLinkClass }} {{ request()->routeIs('verify') ? $navLinkActive : $navLinkInactive }}">Verify</a>
                         @auth
-                            <a href="{{ route('portal.dashboard') }}" class="{{ $navLinkClass }} {{ request()->routeIs('portal.*') ? $navLinkActive : $navLinkInactive }}">Portal</a>
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
                                 <button type="submit" class="rounded-lg border border-slate-200/80 px-3 py-2 text-sm font-medium text-slate-800 transition hover:border-primary/30 hover:bg-slate-50 hover:text-primary">Logout</button>
                             </form>
-                        @else
-                            <a href="{{ route('login') }}" class="{{ $navLinkClass }} {{ request()->routeIs('login') ? $navLinkActive : $navLinkInactive }}">Sign in</a>
                         @endauth
                         <a href="{{ route('contact') }}" class="rounded-lg border px-4 py-2 text-sm font-medium transition {{ request()->routeIs('contact') ? 'border-primary bg-primary text-white hover:bg-primary-hover' : 'border-primary/90 bg-primary text-white hover:bg-primary-hover hover:border-primary' }}">Contact Us</a>
                     </nav>
@@ -91,20 +91,22 @@
                 $mobileActive = 'border-primary/50 bg-primary/10 text-primary font-semibold';
                 $mobileInactive = 'text-slate-800';
             @endphp
+            @php
+                $mobileELearningHref = auth()->check() ? route('portal.dashboard') : route('login');
+                $mobileELearningActive = request()->routeIs('login') || request()->routeIs('portal.*');
+            @endphp
             <div class="flex flex-col gap-1.5 py-2 px-1">
+                <a href="{{ route('trainings.index') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('trainings.*') ? $mobileActive : $mobileInactive }}">Trainings</a>
+                <a href="{{ $mobileELearningHref }}" class="{{ $mobileLinkClass }} {{ $mobileELearningActive ? $mobileActive : $mobileInactive }}">eLearning</a>
+                <a href="{{ route('certifications.index') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('certifications.*') ? $mobileActive : $mobileInactive }}">Certifications</a>
                 <a href="{{ route('home') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('home') ? $mobileActive : $mobileInactive }}">Home</a>
                 <a href="{{ route('workshops.index') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('workshops.*') ? $mobileActive : $mobileInactive }}">Workshops</a>
-                <a href="{{ route('trainings.index') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('trainings.*') ? $mobileActive : $mobileInactive }}">Training</a>
-                <a href="{{ route('certifications.index') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('certifications.*') ? $mobileActive : $mobileInactive }}">Certifications</a>
                 <a href="{{ route('verify') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('verify') ? $mobileActive : $mobileInactive }}">Verify</a>
                 @auth
-                    <a href="{{ route('portal.dashboard') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('portal.*') ? $mobileActive : $mobileInactive }}">Portal</a>
                     <form method="POST" action="{{ route('logout') }}" class="rounded-lg border border-slate-200/80">
                         @csrf
                         <button type="submit" class="w-full px-4 py-2.5 text-left text-sm text-slate-800 transition hover:bg-slate-50 hover:text-primary">Logout</button>
                     </form>
-                @else
-                    <a href="{{ route('login') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('login') ? $mobileActive : $mobileInactive }}">Sign in</a>
                 @endauth
                 <a href="{{ route('contact') }}" class="rounded-lg border px-4 py-2.5 text-center font-medium transition {{ request()->routeIs('contact') ? 'border-primary bg-primary text-white' : 'border-primary/90 bg-primary text-white hover:bg-primary-hover' }}">Contact Us</a>
             </div>
@@ -129,7 +131,7 @@
             <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10">
                 {{-- Brand --}}
                 <div class="lg:col-span-5">
-                    <a href="{{ route('home') }}" class="text-xl font-bold tracking-tight text-white">iPerformance <span class="text-primary">Africa</span></a>
+                    <a href="{{ route('home') }}" class="text-xl font-bold tracking-tight text-white">iPerformance <span class="text-primary-light">Africa</span></a>
                     <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">HR consulting, training, and certification for organizations across Africa. Building excellence through people.</p>
                 </div>
                 {{-- Quick Links --}}
@@ -209,30 +211,33 @@
                     @endif
                 </div>
             </div>
-            <div class="mt-14 border-t border-slate-700/80 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row sm:gap-0">
-                <p class="text-xs tracking-wide text-slate-500">&copy; {{ date('Y') }} iPerformance Africa. All rights reserved.</p>
-                <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-500">
-                    <a href="{{ route('terms') }}" class="transition hover:text-primary">Terms and Conditions</a>
-                    <a href="{{ route('privacy') }}" class="transition hover:text-primary">Privacy Policy</a>
-                    <a href="{{ route('contact') }}" class="transition hover:text-primary">Contact</a>
+            <div class="mt-14 border-t border-slate-700/80 pt-8 flex flex-col items-center gap-6">
+                <div class="flex w-full flex-col items-center justify-between gap-4 sm:flex-row sm:gap-0">
+                    <p class="text-xs tracking-wide text-slate-500">&copy; {{ date('Y') }} iPerformance Africa. All rights reserved.</p>
+                    <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-500">
+                        <a href="{{ route('terms') }}" class="transition hover:text-primary">Terms and Conditions</a>
+                        <a href="{{ route('privacy') }}" class="transition hover:text-primary">Privacy Policy</a>
+                        <a href="{{ route('contact') }}" class="transition hover:text-primary">Contact</a>
+                    </div>
                 </div>
+                <p class="text-center text-xs text-slate-500">Powered by <span class="font-medium text-slate-400">Designekta Studios</span></p>
             </div>
         </div>
     </footer>
 
-    {{-- Mobile bottom nav --}}
-    <nav class="fixed bottom-0 left-0 right-0 z-30 grid grid-cols-4 gap-px border-t border-slate-200 bg-slate-100 md:hidden" aria-label="Primary">
-        <a href="{{ route('home') }}" class="flex flex-col items-center justify-center gap-1 py-3 text-slate-600 transition {{ request()->routeIs('home') ? 'bg-white text-primary font-semibold' : 'bg-white hover:bg-slate-50 hover:text-primary' }}">
-            <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-            <span class="text-xs">Home</span>
-        </a>
-        <a href="{{ route('workshops.index') }}" class="flex flex-col items-center justify-center gap-1 py-3 text-slate-600 transition {{ request()->routeIs('workshops.*') ? 'bg-white text-primary font-semibold' : 'bg-white hover:bg-slate-50 hover:text-primary' }}">
-            <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-            <span class="text-xs">Workshops</span>
-        </a>
+    {{-- Mobile bottom nav: Trainings, eLearning, Certifications --}}
+    @php
+        $bottomELearningHref = auth()->check() ? route('portal.dashboard') : route('login');
+        $bottomELearningActive = request()->routeIs('login') || request()->routeIs('portal.*');
+    @endphp
+    <nav class="fixed bottom-0 left-0 right-0 z-30 grid grid-cols-3 gap-px border-t border-slate-200 bg-slate-100 md:hidden" aria-label="Primary">
         <a href="{{ route('trainings.index') }}" class="flex flex-col items-center justify-center gap-1 py-3 text-slate-600 transition {{ request()->routeIs('trainings.*') ? 'bg-white text-primary font-semibold' : 'bg-white hover:bg-slate-50 hover:text-primary' }}">
             <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            <span class="text-xs">Training</span>
+            <span class="text-xs">Trainings</span>
+        </a>
+        <a href="{{ $bottomELearningHref }}" class="flex flex-col items-center justify-center gap-1 py-3 text-slate-600 transition {{ $bottomELearningActive ? 'bg-white text-primary font-semibold' : 'bg-white hover:bg-slate-50 hover:text-primary' }}">
+            <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <span class="text-xs">eLearning</span>
         </a>
         <a href="{{ route('certifications.index') }}" class="flex flex-col items-center justify-center gap-1 py-3 text-slate-600 transition {{ request()->routeIs('certifications.*') ? 'bg-white text-primary font-semibold' : 'bg-white hover:bg-slate-50 hover:text-primary' }}">
             <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>

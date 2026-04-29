@@ -26,11 +26,14 @@
                 <div class="mt-2 text-slate-600">{!! nl2br(e($certification->requirements)) !!}</div>
             </div>
         @endif
-        @if($certification->apply_link)
-            <div class="mt-10"><a href="{{ $certification->apply_link }}" target="_blank" rel="noopener" class="inline-flex rounded-lg bg-primary px-6 py-3 font-medium text-white hover:bg-primary-hover">Apply now</a></div>
-        @else
-            <div class="mt-10"><a href="{{ route('contact') }}" class="inline-flex rounded-lg bg-primary px-6 py-3 font-medium text-white hover:bg-primary-hover">Contact us to apply</a></div>
-        @endif
+        @php
+            $certRegHref = ($certification->apply_link && \Illuminate\Support\Str::startsWith($certification->apply_link, 'http')) ? $certification->apply_link : route('register');
+            $certRegExt = \Illuminate\Support\Str::startsWith($certRegHref, 'http') && (parse_url($certRegHref, PHP_URL_HOST) !== request()->getHost());
+        @endphp
+        <div class="mt-10 flex flex-wrap items-center gap-3">
+            <a href="{{ $certRegHref }}" class="inline-flex rounded-xl border border-slate-300 px-6 py-3 font-medium text-slate-800 transition hover:bg-slate-50" @if($certRegExt) target="_blank" rel="noopener" @endif>Register for this certification</a>
+            <a href="{{ route('contact') }}" class="inline-flex text-sm text-primary hover:text-primary-hover">Questions? Contact us</a>
+        </div>
     </article>
 </div>
 @endsection

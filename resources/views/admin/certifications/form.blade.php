@@ -46,7 +46,8 @@
                 @error('requirements')<p class="mt-1.5 text-sm text-red-600">{{ $message }}</p>@enderror
             </div>
             <div>
-                <label for="apply_link" class="block text-sm font-medium text-slate-700">Apply link</label>
+                <label for="apply_link" class="block text-sm font-medium text-slate-700">Apply link (optional)</label>
+                <p class="mt-1 text-xs text-slate-500">If empty, the certification page uses your site’s registration (<span class="font-mono">/register</span>). Set a full URL only for an external application form.</p>
                 <input type="url" name="apply_link" id="apply_link" value="{{ old('apply_link', $certification?->apply_link) }}" placeholder="https://..." class="mt-1.5 w-full rounded-xl border border-slate-300 px-4 py-2.5 placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20">
                 @error('apply_link')<p class="mt-1.5 text-sm text-red-600">{{ $message }}</p>@enderror
             </div>
